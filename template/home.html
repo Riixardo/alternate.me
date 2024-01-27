@@ -8,8 +8,30 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-	<script src="index.js"></script>
-
+    <button onclick="sendRequest()">Send Data to Backend</button>
+    <p id="response"></p>
     <p>Hello!!!!</p>
+    <script>
+        // JavaScript function to send data to the backend
+        async function sendRequest() {
+            try {
+                const response = await fetch('/send_data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ key: 'value1' }),
+                });
+
+                const data = await response.json();
+                // This code is executed when the response is received
+                document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions;
+            } catch (error) {
+                // This code is executed in case of an error
+                console.error('Error:', error);
+            }
+        }
+
+    </script>
   </body>
 </html>
