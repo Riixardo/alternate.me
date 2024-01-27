@@ -1,0 +1,53 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: linear-gradient(-45deg, #333, black, #333);
+    background-size: 100% 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+p {
+    color: white;
+}
+
+body p, button {
+    margin: 10px;
+}
+
+.logo {
+    font-family: cursive; 
+}
+
+/* Navbar */
+
+.navbar {
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    /* background-color: #333; */
+}
+
+li {
+    display: inline;
+    float: left;
+}
+
+li a {
+    padding: 14px 16px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+
