@@ -37,7 +37,7 @@
 
     <div class="separator2"></div>
     <div class="get-started-container">
-      <a href="timeline.html"><button type="button" class="get-started-button center">Get Started</button></a>
+      <button type="button" class="get-started-button center" onClick="getStarted()">Get Started</button>
     </div>
     <button onclick="sendInitRequest()">Send Init Data to Backend</button>
   <button onclick="sendFinRequest()">Send Final Data to Backend</button>
@@ -45,7 +45,26 @@
   <p id="prediction"></p>
   <p>Hello!!!!</p>
 
+  <div class="error-container">
+    <p id="error-msg"></p>
+  </div>
+
   <script>
+    // Function to get information from the user and go to the next page
+    function getStarted() {
+      console.log("reached");
+      const ethnicity = prompt("Please enter your ethnicity here (this is for AI-generated photos)");
+      const gender = prompt("Please input your gender here:")
+
+      if (ethnicity === '' || gender === '') {
+        document.getElementById("error-msg").innerHTML = "Please enter valid information.";
+      } else {
+        const nextPageURL = "timeline.html?age=" + encodeURIComponent(ethnicity) + "&gender=" + encodeURIComponent(gender);
+        window.location.href = nextPageURL;
+      }
+    }
+
+
     // JavaScript function to send data to the backend
     async function sendInitRequest() {
       const events = ['The boy at age 5 was a very hard worker. ',
