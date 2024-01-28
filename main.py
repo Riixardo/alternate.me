@@ -1,7 +1,7 @@
 import json
 import openai
 
-key = "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"
+key = ""
 
 def process_req_initial(events: list, ages: list, gender: str):
     client = openai.OpenAI(
@@ -67,4 +67,4 @@ def process_req_fin(age_events, questions_dict, gender):
     #     print("done")
     #     url_list.append(response2.data[0].url)
 
-    return (text_predictions, url_list)
+    return (text_predictions, text_predict_ages, url_list)

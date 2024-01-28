@@ -16,7 +16,19 @@
         </ul>
       </div>
     <div class="description">
-        <p>What is alternate.me?</p>
+        <p>GTE</p>
     </div>
+    <script>
+        // Retrieve query parameters from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const prediction = urlParams.get('prediction');
+        const image = urlParams.get('image');
+        const ages = urlParams.get('ages');
+
+        // Use the values as needed
+        console.log('Prediction:', prediction);
+        console.log('Image:', image);
+        console.log('ages:', ages);
+    </script>
 </body>
 </html>

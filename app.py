@@ -7,6 +7,14 @@ app = Flask(__name__, template_folder='template')
 def index():
     return render_template('home.html')
 
+@app.route('/loading.html')
+def loading():
+    return render_template('loading.html')
+
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
+
 @app.route('/home.html')
 def home():
     return render_template('home.html')
@@ -36,7 +44,7 @@ def send_fin_data():
     # Process the answers and predict the future
     prediction = process_req_fin(age_event, questions_answers_dictionary, gender)
 
-    return jsonify({'prediction': prediction[0], 'image': prediction[1]})
+    return jsonify({'prediction': prediction[0], 'ages': prediction[1], 'image': prediction[2]})
 
 if __name__ == '__main__':
     app.run(debug=True)

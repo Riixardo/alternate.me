@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeline</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
 <body>
@@ -27,43 +27,50 @@
             <li class="active">alejglakjg</li>
             <li class="active">alejglakjg</li>
             <li class="active">alejglakjg</li>
+        </u1>
     </div>
 
     <button onclick="promptUser(this)" data-age="20" >Button test</button>
 
     <label>Enter age:</label>
-    <input type="text" id="age-field" onkeydown="search(this)">
 
 
     <div class="continue-button-container">
-    <button button-type="button" class="continue-button">Continue</button>
+    <button button-type="button" class="continue-button" onclick="sendInitRequest()">Continue</button>
     </div>
+    <p id="response"></p>
+    <p id="prediction"></p>
     <script>
         let results = []; // text of the events
         let age_arr = [];
 
         // JavaScript function to send data to the backend
-        async function sendRequest() {
+        async function sendInitRequest() {
             try {
-                const response = await fetch('/send_data', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ events: results }),
+                const response = await fetch('/send_init_data', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ gender: 'male', events: results, age_arr: age_arr})
                 });
 
                 const data = await response.json();
+                sessionStorage.setItem('questions', JSON.stringify(data.questions));
+                sessionStorage.setItem('events', JSON.stringify(results));
+                sessionStorage.setItem('ages', JSON.stringify(age_arr));
+                sessionStorage.setItem('gender', "male");
+
                 // This code is executed when the response is received
-                document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions;
-            } catch (error) {
+                document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions[0];
+              } catch (error) {
                 // This code is executed in case of an error
                 console.error('Error:', error);
-            }
+              }
+              sendFinRequest()
           }
 
           async function promptUser(button) {
-            const age = button.dataset.age;
             const answer = prompt("Input the life event");
 
             const answer_age = prompt("Input the age that this happened:");
@@ -73,17 +80,42 @@
             console.log(results);
           }
 
-          function search(textfield) {
-            if (event.keyCode == 13) {
-                console.log(textfield.value);
-                user_age = textfield.value;
+          async function sendFinRequest() {
+              try {
+                const questions = JSON.parse(sessionStorage.getItem('questions'));
+                const events = JSON.parse(sessionStorage.getItem('events'));
+                const gender = sessionStorage.getItem('gender');
+                const ages = sessionStorage.getItem('ages');
+                console.log(events + " " + questions);
 
+                // Check if questions and events are null
+                if (!questions || !events) {
+                  console.error('Questions or events are null.');
+                  return;
+                }
+
+                const answers = [];
+                questions.forEach(question => {
+                  const answer = prompt(question);
+                  answers.push(answer);
+                });
+                document.body.innerHTML = await fetch('/loading.html').then(response => response.text());
+                const response = await fetch('/send_fin_data', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ questions: questions, answers: answers, events: events, gender: gender, ages: ages})
+                });
+
+                const data = await response.json();
+                window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages + '&image=' + data.image;
+                // Handle the prediction result
+              } catch (error) {
+                console.error('Error:', error);
+              }
             }
-          }
 
       </script>
-
-
-    
 </body>
 </html>
