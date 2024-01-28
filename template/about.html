@@ -4,7 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <style>
+        body {
+            color: white; /* Set the default text color to white */
+        }
+
+        /* Style the navigation bar links */
+        .navbar ul li a {
+            color: white; /* Set the color of the links to white */
+            text-decoration: none; /* Remove underlines from links */
+        }
+
+        /* Style the logo link */
+        .logo {
+            color: white; /* Set the color of the logo to white */
+        }
+
+        /* Style the button */
+        #changePicture {
+            color: white; /* Set the color of the button text to white */
+            background-color: #007bff; /* Set a background color for the button */
+            border: none; /* Remove borders from the button */
+            padding: 10px 20px; /* Add padding to the button */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        /* Style the button on hover */
+        #changePicture:hover {
+            background-color: #0056b3; /* Darken the background color on hover */
+        }
+    </style>
+    <link rel="stylesheet" href="../static/style.css"> <!-- Include external CSS file -->
 </head>
 <body>
     <div class="navbar">
@@ -29,6 +59,8 @@
         <div class="bottom-section">
             <!-- Images at the bottom -->
             <div class="images" id="images"></div>
+            <!-- Button to change the picture -->
+            <button id="changePicture">Change Picture</button>
         </div>
     </div>
 
@@ -41,20 +73,30 @@
         const decodedImages = JSON.parse(decodedImages2);
         const ages = urlParams.get('ages');
 
-        console.log(predictions);
-        console.log(decodedImages);
-        console.log(ages);
+        let currentIndex = 0; // Keep track of the current image index
 
-        document.getElementById('prediction').textContent = predictions.split(',')[0];
-        document.getElementById('age').textContent = "Age: " + ages.split(',')[0];
+        // Function to update the displayed image
+        function updateImage() {
+            const imagesContainer = document.getElementById('images');
+            imagesContainer.innerHTML = ''; // Clear previous images
 
-        // Display images at the bottom section
-        const imagesContainer = document.getElementById('images');
-        decodedImages.forEach(imageSrc => {
             const imgElement = document.createElement('img');
-            imgElement.src = imageSrc;
+            imgElement.src = decodedImages[currentIndex];
             imgElement.alt = 'Image';
             imagesContainer.appendChild(imgElement);
+
+            // Update prediction and age accordingly
+            document.getElementById('prediction').textContent = predictions.split(',')[currentIndex];
+            document.getElementById('age').textContent = "Age: " + ages.split(',')[currentIndex];
+        }
+
+        // Display the initial image
+        updateImage();
+
+        // Button click event to change the picture
+        document.getElementById('changePicture').addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % decodedImages.length; // Move to the next image circularly
+            updateImage();
         });
     </script>
 </body>

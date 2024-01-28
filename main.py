@@ -1,10 +1,12 @@
 import json
 import openai
 
-key = "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"
+key = ""
 
 def process_req_initial(events: list, ages: list, gender: str):
-    client = openai.OpenAI(
+    client = openai.OpenAI(;
+
+
       api_key=key
     )
     age_event_dictionary = dict(zip(ages, events))
