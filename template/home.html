@@ -1,37 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <button onclick="sendRequest()">Send Data to Backend</button>
-    <p id="response"></p>
-    <p>Hello!!!!</p>
-    <script>
-        // JavaScript function to send data to the backend
-        async function sendRequest() {
-            try {
-                const response = await fetch('/send_data', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ key: 'value1' }),
-                });
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>HTML 5 Boilerplate</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    /* Add your CSS styles here */
+  </style>
+</head>
+<body>
+  <button onclick="sendInitRequest()">Send Init Data to Backend</button>
+  <button onclick="sendFinRequest()">Send Final Data to Backend</button>
+  <p id="response"></p>
+  <p id="prediction"></p>
+  <p>Hello!!!!</p>
 
-                const data = await response.json();
-                // This code is executed when the response is received
-                document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions;
-            } catch (error) {
-                // This code is executed in case of an error
-                console.error('Error:', error);
-            }
+  <script>
+    // JavaScript function to send data to the backend
+    async function sendInitRequest() {
+      const events = ['The boy at age 5 was a very hard worker. ',
+                     'At age 10 he persisted his hard working nature and delivered newspapers in the Boston area.',
+                     'When he was 12, his parents divorced and he went into a state of loneliness.'];
+      try {
+        const response = await fetch('/send_init_data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ gender: 'male', events: events, age_arr: [5, 10, 12] })
+        });
+
+        const data = await response.json();
+        sessionStorage.setItem('questions', JSON.stringify(data.questions));
+        sessionStorage.setItem('events', JSON.stringify(events));
+        sessionStorage.setItem('ages', JSON.stringify([5, 10, 12]));
+        sessionStorage.setItem('gender', "male");
+
+        // This code is executed when the response is received
+        document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions[0];
+      } catch (error) {
+        // This code is executed in case of an error
+        console.error('Error:', error);
+      }
+    }
+
+    async function sendFinRequest() {
+      try {
+        const questions = JSON.parse(sessionStorage.getItem('questions'));
+        const events = JSON.parse(sessionStorage.getItem('events'));
+        const gender = sessionStorage.getItem('gender');
+        const ages = sessionStorage.getItem('ages');
+        console.log(events + " " + questions);
+
+        // Check if questions and events are null
+        if (!questions || !events) {
+          console.error('Questions or events are null.');
+          return;
         }
 
-    </script>
-  </body>
+        const answers = [];
+        questions.forEach(question => {
+          const answer = prompt(question);
+          answers.push(answer);
+        });
+
+        const response = await fetch('/send_fin_data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ questions: questions, answers: answers, events: events, gender: gender, ages: ages})
+        });
+
+        const data = await response.json();
+        document.getElementById('prediction').textContent = 'Future: ' + data.prediction + ' YOUR IMAGE::' + data.image;
+
+        // Handle the prediction result
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  </script>
+</body>
 </html>
