@@ -29,9 +29,13 @@
             <li class="active">alejglakjg</li>
     </div>
 
-    <button onclick="sendRequest()">Open Popup</button>
+    <button onclick="promptUser(this)" data-age="20" >Button test</button>
 
+    <div class="continue-button-container">
+    <button button-type="button" class="continue-button">Continue</button>
+    </div>
     <script>
+        let results = [];
         // JavaScript function to send data to the backend
         async function sendRequest() {
             try {
@@ -40,7 +44,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ key: 'value1' }),
+                    body: JSON.stringify({ events: results }),
                 });
 
                 const data = await response.json();
@@ -51,6 +55,15 @@
                 console.error('Error:', error);
             }
           }
+
+          async function promptUser(button) {
+            const age = button.dataset.age;
+            const answer = prompt("Input the life event for age " + age);
+
+            results.push(answer);
+            console.log(results);
+          }
+
       </script>
 
 
