@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeline</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
 <body>
@@ -29,12 +29,31 @@
             <li class="active">alejglakjg</li>
     </div>
 
-    <button button-type="button">
-        Button 1
-    </button>
+    <button onclick="sendRequest()">Open Popup</button>
+
+    <script>
+        // JavaScript function to send data to the backend
+        async function sendRequest() {
+            try {
+                const response = await fetch('/send_data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ key: 'value1' }),
+                });
+
+                const data = await response.json();
+                // This code is executed when the response is received
+                document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions;
+            } catch (error) {
+                // This code is executed in case of an error
+                console.error('Error:', error);
+            }
+          }
+      </script>
 
 
-
-
+    
 </body>
 </html>
