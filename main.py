@@ -1,7 +1,7 @@
 import json
 import openai
 
-key = ""
+key = "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"
 
 def process_req_initial(events: list, ages: list, gender: str):
     client = openai.OpenAI(

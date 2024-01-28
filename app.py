@@ -7,6 +7,14 @@ app = Flask(__name__, template_folder='template')
 def index():
     return render_template('home.html')
 
+@app.route('/home.html')
+def home():
+    return render_template('home.html')
+
+@app.route('/timeline.html')
+def timeline():
+    return render_template('timeline.html')
+
 @app.route('/send_init_data', methods=['POST'])
 def send_init_data():
     data = request.get_json()
