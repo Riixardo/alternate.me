@@ -31,11 +31,17 @@
 
     <button onclick="promptUser(this)" data-age="20" >Button test</button>
 
+    <label>Enter age:</label>
+    <input type="text" id="age-field" onkeydown="search(this)">
+
+
     <div class="continue-button-container">
     <button button-type="button" class="continue-button">Continue</button>
     </div>
     <script>
-        let results = [];
+        let results = []; // text of the events
+        let age_arr = [];
+
         // JavaScript function to send data to the backend
         async function sendRequest() {
             try {
@@ -58,10 +64,21 @@
 
           async function promptUser(button) {
             const age = button.dataset.age;
-            const answer = prompt("Input the life event for age " + age);
+            const answer = prompt("Input the life event");
+
+            const answer_age = prompt("Input the age that this happened:");
 
             results.push(answer);
+            age_arr.push(answer_age);
             console.log(results);
+          }
+
+          function search(textfield) {
+            if (event.keyCode == 13) {
+                console.log(textfield.value);
+                user_age = textfield.value;
+
+            }
           }
 
       </script>
