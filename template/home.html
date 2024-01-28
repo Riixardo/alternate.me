@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HTML 5 Boilerplate</title>
-  <!-- <link rel="stylesheet" href="style.css"> -->
-  <style>
-    /* Add your CSS styles here */
-  </style>
-</head>
-<body>
-  <button onclick="sendInitRequest()">Send Init Data to Backend</button>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+
+
+  </head>
+  <body>
+    <div class="separator-navbar"></div>
+    <!--Navbar:-->
+    <div class="navbar">
+      <ul>
+        <a href="home.html" class="logo">alternate.me</a>
+        <li><a href="contact.asp" class="navbar-info">Contact</a></li>
+        <li><a href="about.html" class="navbar-info">About</a></li>
+        <li><a href="home.html" class="navbar-info">Home</a></li>
+      </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="intros">
+      <div class="welcome-div">
+        <p class="welcome-message">Welcome to <br><span style="color: red; ">alternate.me.</span></p>
+      </div>
+
+      <div class="explanation-div">
+        <p class="">What is it?</p>
+        <p class="">Are you curious about the "what ifs" of life? Have you ever wondered how your life might have unfolded if you made different choices along the way? Welcome to a transformative journey of self-discovery and exploration.</p>
+      </div>
+    </div>
+
+    <div class="separator2"></div>
+    <div class="get-started-container">
+      <a href="timeline.html"><button type="button" class="get-started-button center">Get Started</button></a>
+    </div>
+    <button onclick="sendInitRequest()">Send Init Data to Backend</button>
   <button onclick="sendFinRequest()">Send Final Data to Backend</button>
   <p id="response"></p>
   <p id="prediction"></p>
@@ -83,5 +111,6 @@
       }
     }
   </script>
-</body>
+    </body>
+  </body>
 </html>
