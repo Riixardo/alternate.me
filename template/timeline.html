@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeline</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
 <body>
@@ -22,18 +22,30 @@
     <div class="separator"></div>
 
     <!---The timeline-->
-    <div class="timeline">
+    <!-- <div class="timeline">
         <u1 class="bar">
             <li class="active">alejglakjg</li>
             <li class="active">alejglakjg</li>
             <li class="active">alejglakjg</li>
         </u1>
+    </div> -->
+
+    <div class="table-container">
+        <table id="events-table">
+            <thead>
+                <tr>
+                    <th>Age</th>
+                    <th>Event</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
     </div>
 
-    <button onclick="promptUser(this)" data-age="20" >Button test</button>
+    <button onclick="promptUser(this)" class="create-event-button">Enter an event:</button>
 
-    <label>Enter age:</label>
 
+    <p id="display-error-event" style="color: red;"></p>
 
     <div class="continue-button-container">
     <button button-type="button" class="continue-button" onclick="sendInitRequest()">Continue</button>
@@ -41,8 +53,21 @@
     <p id="response"></p>
     <p id="prediction"></p>
     <script>
+        // Get parameters from the URL
+        function getParameterFromURL(parameterName) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(parameterName);
+        }
+
+        // Get the ethnicity and gender from the URL
+        const ethnicity = getParameterFromURL('ethnicity');
+        const gender = getParameterFromURL('gender');
+
+
         let results = []; // text of the events
         let age_arr = [];
+
+        let table_results = [];
 
         // JavaScript function to send data to the backend
         async function sendInitRequest() {
@@ -59,7 +84,7 @@
                 sessionStorage.setItem('questions', JSON.stringify(data.questions));
                 sessionStorage.setItem('events', JSON.stringify(results));
                 sessionStorage.setItem('ages', JSON.stringify(age_arr));
-                sessionStorage.setItem('gender', "male");
+                sessionStorage.setItem('gender', gender);
 
                 // This code is executed when the response is received
                 document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions[0];
@@ -72,12 +97,34 @@
 
           async function promptUser(button) {
             const answer = prompt("Input the life event");
-
             const answer_age = prompt("Input the age that this happened:");
 
+            
             results.push(answer);
             age_arr.push(answer_age);
-            console.log(results);
+
+            table_results.push({"age": answer_age, "event": answer});
+            // Sort and update the table
+            // Sort table_results according to age
+            table_results.sort(function(a, b) {
+                return b.age - a.age;
+            });
+
+            var table = document.getElementById("events-table");
+            // Clear table body
+            document.getElementById("tbody").innerHTML = '';
+
+            var tbodyRef = document.getElementById('tbody');
+            table_results.forEach((element) => {
+                let row = tbodyRef.insertRow();
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+
+                cell1.innerHTML = element.age;
+                cell2.innerHTML = element.event;
+            });
+
+            console.log(table_results);
           }
 
           async function sendFinRequest() {
@@ -110,9 +157,7 @@
 
                 const data = await response.json();
                 const encodedImgList = encodeURIComponent(JSON.stringify(data.image))
-                localStorage.setItem('variable', JSON.stringify(data.image));
-
-                window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages;
+                window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages + '&image=' + encodedImgList;
                 // Handle the prediction result
               } catch (error) {
                 console.error('Error:', error);
