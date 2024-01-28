@@ -14,21 +14,39 @@
           <li><a href="contact.asp">Contact</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
-      </div>
-    <div class="description">
-        <p>GTE</p>
     </div>
+
+    <div class="container">
+        <!-- Display the age, image, and prediction at the same index -->
+        <div class="age" id="age"></div>
+        <img class="image" id="image" src="" alt="Image">
+        <div class="prediction" id="prediction"></div>
+        <div class="image" id="images"></div>
+    </div>
+
     <script>
         // Retrieve query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const prediction = urlParams.get('prediction');
-        const image = urlParams.get('image');
+        const predictions = urlParams.get('prediction');
+        const encodedImages = urlParams.get('image');
+        const decodedImages = JSON.parse(decodeURIComponent(encodedImages));
         const ages = urlParams.get('ages');
 
-        // Use the values as needed
-        console.log('Prediction:', prediction);
-        console.log('Image:', image);
-        console.log('ages:', ages);
+        console.log(predictions);
+        console.log(decodedImages);
+        console.log(ages);
+
+        document.getElementById('prediction').textContent = predictions.split(',')[0];
+        document.getElementById('age').textContent = ages.split(',')[0];
+        document.getElementById('image').src = decodedImages[0];
+
+        document.getElementById('images').textContent = decodedImages
+
+
+        // Use the values to update the content
+        // const ageElement = document.getElementById('age');
+        // const imageElement = document.getElementById('image');
+        // const predictionElement = document.getElementById('prediction');
     </script>
 </body>
 </html>

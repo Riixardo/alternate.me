@@ -109,7 +109,8 @@
                 });
 
                 const data = await response.json();
-                window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages + '&image=' + data.image;
+                const encodedImgList = encodeURIComponent(JSON.stringify(data.image))
+                window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages + '&image=' + encodedImgList;
                 // Handle the prediction result
               } catch (error) {
                 console.error('Error:', error);
