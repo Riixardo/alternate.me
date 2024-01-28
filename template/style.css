@@ -23,12 +23,15 @@ body p, button {
     font-family: cursive; 
 }
 
-/* Navbar */
-
-.navbar {
-
+.description {
+    text-align: center;
+    font-family: cursive
 }
 
+.description p {
+    color: white;
+    font-size: 50px;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -39,10 +42,19 @@ ul {
 
 li {
     display: inline;
-    float: left;
+    float: right;
 }
 
 li a {
+    padding: 14px 16px;
+    margin-right: 25px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+a {
     padding: 14px 16px;
     text-align: center;
     color: white;
