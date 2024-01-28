@@ -17,11 +17,19 @@
     </div>
 
     <div class="container">
-        <!-- Display the age, image, and prediction at the same index -->
-        <div class="age" id="age"></div>
-        <img class="image" id="image" src="" alt="Image">
-        <div class="prediction" id="prediction"></div>
-        <div class="image" id="images"></div>
+        <!-- Display the age, prediction, and images -->
+        <div class="top-section">
+            <div class="age" id="age"></div> <!-- Age at the top -->
+        </div>
+
+        <div class="middle-section">
+            <div class="prediction" id="prediction"></div> <!-- Story (prediction) in the middle -->
+        </div>
+
+        <div class="bottom-section">
+            <!-- Images at the bottom -->
+            <div class="images" id="images"></div>
+        </div>
     </div>
 
     <script>
@@ -29,7 +37,8 @@
         const urlParams = new URLSearchParams(window.location.search);
         const predictions = urlParams.get('prediction');
         const encodedImages = urlParams.get('image');
-        const decodedImages = JSON.parse(decodeURIComponent(encodedImages));
+        const decodedImages2 = localStorage.getItem('variable');
+        const decodedImages = JSON.parse(decodedImages2);
         const ages = urlParams.get('ages');
 
         console.log(predictions);
@@ -37,16 +46,16 @@
         console.log(ages);
 
         document.getElementById('prediction').textContent = predictions.split(',')[0];
-        document.getElementById('age').textContent = ages.split(',')[0];
-        document.getElementById('image').src = decodedImages[0];
+        document.getElementById('age').textContent = "Age: " + ages.split(',')[0];
 
-        document.getElementById('images').textContent = decodedImages
-
-
-        // Use the values to update the content
-        // const ageElement = document.getElementById('age');
-        // const imageElement = document.getElementById('image');
-        // const predictionElement = document.getElementById('prediction');
+        // Display images at the bottom section
+        const imagesContainer = document.getElementById('images');
+        decodedImages.forEach(imageSrc => {
+            const imgElement = document.createElement('img');
+            imgElement.src = imageSrc;
+            imgElement.alt = 'Image';
+            imagesContainer.appendChild(imgElement);
+        });
     </script>
 </body>
 </html>

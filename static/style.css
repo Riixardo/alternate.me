@@ -155,11 +155,11 @@ a {
 .timeline{
     box-sizing: border-box;
     background-color: blue;
-    position: relative; 
+    position: relative;
     height: 400px;
     max-width: 1350px;
     margin: 0 auto;
-    
+
 }
 
 .timeline::after{
@@ -171,14 +171,72 @@ a {
     top: 1;
     bottom: 0;
     left: 3%;
-    margin-bottom: 25px; 
+    margin-bottom: 25px;
     margin-left: -3%;
+    transform: translateY(-125px);
 
-    
+
 }
 
+.continue-button {
+    font-size: 35px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    margin: 0px;
+    border-radius: 25px;
+    background-color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
 
+    position: fixed;
+    bottom: 5%;
+    right: 3%;
 
+    width: 25%;
+    height: 15%;
+}
 
+.continue-button-container {
+    height: 12.5%;
+    /* background-color: blue; */
+    text-align: right;
+}
 
+.continue-button:hover {
+    background-color: green;
+    color: white;
+}
 
+.table-container {
+    text-align: center;
+    /* background-color: blue; */
+}
+
+table {
+    width: 75%;
+    margin: 0 auto;
+    color: white;
+    word-wrap: break-word;
+    table-layout: fixed;
+
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+.create-event-button {
+    position: fixed;
+    bottom: 25%;
+    right: 13%;
+    font-size: 30px;
+    border: none;
+    color: black;
+    margin: 0px;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
