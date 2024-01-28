@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeline</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
 </head>
 <body>
@@ -85,6 +85,8 @@
                 sessionStorage.setItem('events', JSON.stringify(results));
                 sessionStorage.setItem('ages', JSON.stringify(age_arr));
                 sessionStorage.setItem('gender', gender);
+                sessionStorage.setItem('eth', ethnicity);
+
 
                 // This code is executed when the response is received
                 document.getElementById('response').textContent = 'Backend Response: ' + data.result + ' + ' + data.questions[0];
@@ -99,7 +101,7 @@
             const answer = prompt("Input the life event");
             const answer_age = prompt("Input the age that this happened:");
 
-            
+
             results.push(answer);
             age_arr.push(answer_age);
 
@@ -133,6 +135,7 @@
                 const events = JSON.parse(sessionStorage.getItem('events'));
                 const gender = sessionStorage.getItem('gender');
                 const ages = sessionStorage.getItem('ages');
+                const eth = sessionStorage.getItem('eth');
                 console.log(events + " " + questions);
 
                 // Check if questions and events are null
@@ -152,11 +155,12 @@
                   headers: {
                     'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify({ questions: questions, answers: answers, events: events, gender: gender, ages: ages})
+                  body: JSON.stringify({ questions: questions, answers: answers, events: events, gender: gender, ages: ages, eth:eth})
                 });
 
                 const data = await response.json();
                 const encodedImgList = encodeURIComponent(JSON.stringify(data.image))
+                  localStorage.setItem('variable', JSON.stringify(data.image));
                 window.location.href = '/about.html?prediction=' + data.prediction + '&ages=' + data.ages + '&image=' + encodedImgList;
                 // Handle the prediction result
               } catch (error) {

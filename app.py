@@ -36,13 +36,14 @@ def send_fin_data():
     data = request.get_json()
     questions_answers_dictionary = dict(zip(data['questions'],data['answers']))
     gender = data['gender']
+    eth = data['eth']
     age_event = {}
     ages_list = eval(data['ages'])
     for i in range(len(ages_list)):
         age_event[ages_list[i]] = data['events'][i]
 
     # Process the answers and predict the future
-    prediction = process_req_fin(age_event, questions_answers_dictionary, gender)
+    prediction = process_req_fin(age_event, questions_answers_dictionary, gender, eth)
 
     return jsonify({'prediction': prediction[0], 'ages': prediction[1], 'image': prediction[2]})
 

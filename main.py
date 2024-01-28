@@ -1,7 +1,7 @@
 import json
 import openai
 
-key = "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"
+key = "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"
 
 def process_req_initial(events: list, ages: list, gender: str):
     client = openai.OpenAI(
@@ -27,7 +27,7 @@ def process_req_initial(events: list, ages: list, gender: str):
     print(q_dict)
     return q_dict['questions']
 
-def process_req_fin(age_events, questions_dict, gender):
+def process_req_fin(age_events, questions_dict, gender, eth):
     client = openai.OpenAI(
         api_key=key
     )
@@ -59,11 +59,12 @@ def process_req_fin(age_events, questions_dict, gender):
     for i in range(5):
         response2 = client.images.generate(
             model="dall-e-2",
-            prompt="A " + gender + " who is persian and aged " + str(text_predict_ages[i]) + " during the 21st century in the following event:" + text_predictions[i],
+            prompt="A " + gender + " who is " + eth + " and aged " + str(text_predict_ages[i]) + " during the 21st century in the following event:" + text_predictions[i],
             size="512x512",
             quality="standard",
             n=1,
         )
+        print(eth)
         print("done")
         url_list.append(response2.data[0].url)
         print(response2.data[0].url)
