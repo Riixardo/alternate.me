@@ -6,30 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HTML 5 Boilerplate</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lobster&display=swap">
+
+
   </head>
   <body>
     <!--Navbar:-->
     <div class="navbar">
       <ul>
         <a href="home.html" class="logo">alternate.me</a>
-        <li><a href="news.html" class="navbar-info">News</a></li>
+        <li><a href="home.html" class="navbar-info">Home</a></li>
         <li><a href="contact.asp" class="navbar-info">Contact</a></li>
         <li><a href="about.html" class="navbar-info">About</a></li>
       </ul>
     </div>
 
-    <button onclick="sendRequest()">Send Data to Backend</button>
+    <div class="separator"></div>
+
+    <div class="intros">
+      <div class="welcome-div">
+        <p class="welcome-message">Welcome to <br><span style="color: red; ">alternate.me.</span></p>
+      </div>
+
+      <div class="explanation-div">
+        <p class="">What is it?</p>
+        <p class="">Are you curious about the "what ifs" of life? Have you ever wondered how your life might have unfolded if you made different choices along the way? Welcome to a transformative journey of self-discovery and exploration.</p>
+      </div>
+    </div>
+
+    <div class="separator2"></div>
+    <div class="get-started-container">
+      <button type="button" class="get-started-button center">Get Started</button>
+    </div>
+
+
+    <!-- <button onclick="sendRequest()">Send Data to Backend</button>
 
     <p id="response"></p>
     <p>Hello!!!!</p>
-
-
-
-
-
-
-
-
     <script>
         // JavaScript function to send data to the backend
         async function sendRequest() {
@@ -51,6 +65,6 @@
             }
           }
 
-    </script>
+    </script> -->
   </body>
 </html>
