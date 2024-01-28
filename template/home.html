@@ -30,7 +30,7 @@
       </div>
 
       <div class="explanation-div">
-        <p class="">What is it?</p>
+        <p class="" style="text-decoration: underline; text-align: center;">What is it?</p>
         <p class="">Are you curious about the "what ifs" of life? Have you ever wondered how your life might have unfolded if you made different choices along the way? Welcome to a transformative journey of self-discovery and exploration.</p>
       </div>
     </div>
@@ -39,11 +39,11 @@
     <div class="get-started-container">
       <button type="button" class="get-started-button center" onClick="getStarted()">Get Started</button>
     </div>
-    <button onclick="sendInitRequest()">Send Init Data to Backend</button>
-  <button onclick="sendFinRequest()">Send Final Data to Backend</button>
-  <p id="response"></p>
-  <p id="prediction"></p>
-  <p>Hello!!!!</p>
+    <!-- <button onclick="sendInitRequest()">Send Init Data to Backend</button> -->
+  <!-- <button onclick="sendFinRequest()">Send Final Data to Backend</button> -->
+  <!-- <p id="response"></p> -->
+  <!-- <p id="prediction"></p> -->
+  <!-- <p>Hello!!!!</p> -->
 
   <div class="error-container">
     <p id="error-msg"></p>
@@ -54,12 +54,13 @@
     function getStarted() {
       console.log("reached");
       const ethnicity = prompt("Please enter your ethnicity here (this is for AI-generated photos)");
+      console.log(ethnicity);
       const gender = prompt("Please input your gender here:")
 
       if (ethnicity === '' || gender === '') {
         document.getElementById("error-msg").innerHTML = "Please enter valid information.";
       } else {
-        const nextPageURL = "timeline.html?age=" + encodeURIComponent(ethnicity) + "&gender=" + encodeURIComponent(gender);
+        const nextPageURL = "timeline.html?ethnicity=" + encodeURIComponent(ethnicity) + "&gender=" + encodeURIComponent(gender);
         window.location.href = nextPageURL;
       }
     }
